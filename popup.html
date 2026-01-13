@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your AI Buddy Settings</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <h3>Hi, stranger! Here you can set me up the way YOU like it:</h3>
+
+  <label>
+    Did you bring Your API Key?
+    <input type="password" id="apiKeyInput" placeholder="Paste it here">
+    <small>(shh, don’t tell anyone else.. 🤫)</small>
+  </label>
+
+  <label>
+    Depth of explanation (aka “How much should I overthink it?”):
+    <select id="explanationDepth">
+      <option value="normal">Normal – enough to impress</option>
+      <option value="short">Short – TL;DR mode</option>
+      <option value="academic">Academic – fancy style</option>
+    </select>
+  </label>
+
+  <label>
+    Explanation language (I can talk human! 🌎):
+    <select id="explanationLanguage">
+      <option value="en">English</option>
+      <option value="de">German</option>
+      <option value="lv">Latvian</option>
+      <option value="ru">Russian</option>
+      <option value="sp">Spanish</option>
+      <option value="nd">Auto-detect (native)</option>
+    </select>
+    <small>If your desired language (native) isn’t listed, I’ll try to figure it out automatically.</small>
+  </label>
+
+  <label>
+    Font (your words, your style ✍️):
+    <select id="fontSelect">
+      <option value="Arial">Arial – classic</option>
+      <option value="Times New Roman">Times New Roman – scholarly</option>
+      <option value="Courier New">Courier New – retro hacker</option>
+    </select>
+  </label>
+
+  <label>
+    Text size (because some of us like to squint 👀):
+    <select id="textSizeSelect">
+      <option value="12">12px – dainty</option>
+      <option value="14">14px – classics</option>
+      <option value="16">16px – comfy</option>
+      <option value="18">18px – giant</option>
+    </select>
+  </label>
+
+  <label class="dual-language">
+    Dual language explanations? 😎:
+    <select id="dualLanguage">
+      <option value="none">Nope, thanks</option>
+      <option value="en|de">English | German</option>
+      <option value="en|fr">English | French</option>
+      <option value="en|sp">English | Spanish</option>
+      <option value="en|ru">English | Russian</option>
+      <option value="en|lv">English | Latvian</option>
+      <option value="en|nd">English | Auto-detect (native)</option>
+      <option value="fr|nd">French | Auto-detect (native)</option>
+      <option value="de|nd">German | Auto-detect (native)</option>
+      <option value="lv|nd">Latvian | Auto-detect (native)</option>
+      <option value="sp|nd">Spanish | Auto-detect (native)</option>
+      <option value="ru|nd">Russian | Auto-detect (native)</option>
+    </select>
+    <small>If your desired language (native) isn’t listed, I’ll try to figure it out automatically.</small>
+  </label>
+
+  <label>
+    <input type="checkbox" id="dictionaryMode"> Dictionary Mode 📚 ?
+  </label>
+
+  <button id="downloadDictionaryBtn">Download Dictionary 📥</button>
+  <button id="saveBtn">Save Settings 💾</button>
+
+  <small class="link" id="usagePolicy">Click here for my boring legal stuff…</small>
+  <small>AI Disclaimer: I might occasionally make stuff up, but I try my best ✨</small>
+
+  <script src="popup.js"></script>
+</body>
+</html>

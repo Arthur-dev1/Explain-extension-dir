@@ -7,27 +7,36 @@
     const bubble = document.createElement("div");
     bubble.id = "instant-explain-bubble";
     bubble.innerText = text;
-    bubble.style.position = "absolute";
-    bubble.style.background = "#fff";
-    bubble.style.color = "#000";
-    bubble.style.border = "1px solid #888";
-    bubble.style.borderRadius = "8px";
-    bubble.style.padding = "10px";
-    bubble.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)";
-    bubble.style.zIndex = 999999;
-    bubble.style.maxWidth = "300px";
-    bubble.style.fontSize = "14px";
-    bubble.style.lineHeight = "1.4";
-    bubble.style.whiteSpace = "pre-wrap";
-    bubble.style.cursor = "pointer";
 
+    // ---  styling ---
+    Object.assign(bubble.style, {
+      position: "absolute",
+      background: "#2a2a3d",         
+      color: "#e0e0e0",               
+      border: "1px solid #444",        
+      borderRadius: "10px",
+      padding: "12px 16px",
+      boxShadow: "0 6px 18px rgba(0,0,0,0.4)", 
+      zIndex: 999999,
+      maxWidth: "320px",
+      fontSize: "14px",
+      lineHeight: "1.5",
+      whiteSpace: "pre-wrap",
+      cursor: "pointer",
+      fontFamily: "'Segoe UI', sans-serif",
+      transition: "opacity 0.2s ease, transform 0.2s ease",
+      opacity: 0,
+      transform: "translateY(5px)"
+    });
+
+    // --- Positioning ---
     if (!x || !y) {
       const sel = window.getSelection();
       if (sel.rangeCount > 0) {
         const range = sel.getRangeAt(0);
         const rect = range.getBoundingClientRect();
         x = rect.left + window.scrollX;
-        y = rect.bottom + window.scrollY + 5;
+        y = rect.bottom + window.scrollY + 8;
       } else {
         x = 100;
         y = 100;
@@ -37,10 +46,20 @@
     bubble.style.left = `${x}px`;
     bubble.style.top = `${y}px`;
 
-    bubble.addEventListener("click", () => bubble.remove());
-    setTimeout(() => bubble.remove(), 40000);
-
+    // --- Fade in animation ---
     document.body.appendChild(bubble);
+    requestAnimationFrame(() => {
+      bubble.style.opacity = 1;
+      bubble.style.transform = "translateY(0)";
+    });
+
+    // --- Remove on click or after 40s ---
+    bubble.addEventListener("click", () => bubble.remove());
+    setTimeout(() => {
+      bubble.style.opacity = 0;
+      bubble.style.transform = "translateY(5px)";
+      setTimeout(() => bubble.remove(), 200);
+    }, 40000);
   }
 
   // ---- Top frame guard ----
@@ -66,18 +85,19 @@
   }
 
   // ---- Listen for menu clicks ----
-    chrome.runtime.onMessage.addListener((message) => {
+  chrome.runtime.onMessage.addListener((message) => {
     if (message.type !== "EXPLAIN_SELECTION") return;
 
     const selection = window.getSelection();
     const context = getContextAroundSelection(selection);
 
     chrome.runtime.sendMessage(
-        { type: "EXPLAIN_SELECTION_API", text: message.text, context },
-        (res) => {
+      { type: "EXPLAIN_SELECTION_API", text: message.text, context },
+      (res) => {
         if (res.error) showExplanationBubble(res.error);
         else showExplanationBubble(res.explanation);
-        }
+      }
     );
-    });
+  });
 })();
+

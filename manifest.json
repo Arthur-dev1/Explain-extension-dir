@@ -9,6 +9,9 @@
     "scripting",
     "contextMenus"
   ],
+  "action": {
+    "default_popup": "popup.html"
+  },
   "host_permissions": [
     "https://api.openai.com/*"
   ],
@@ -21,4 +24,4 @@
       "js": ["content.js"]
     }
   ]
-}
+}  

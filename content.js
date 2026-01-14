@@ -59,8 +59,22 @@
       bubble.style.opacity = 0;
       bubble.style.transform = "translateY(5px)";
       setTimeout(() => bubble.remove(), 200);
-    }, 40000);
+    }, 500000);
   }
+
+  // ---- Language detection helper ----
+
+  function detectPageLanguage() {
+    const htmlLang = document.documentElement.lang;
+    if (htmlLang) return htmlLang.split("-")[0];
+
+    const url = location.href.toLowerCase();
+    const match = url.match(/\/(en|de|fr|ru|lv|es)\//);
+    if (match) return match[1];
+
+    return navigator.language.split("-")[0];
+  }
+
 
   // ---- Top frame guard ----
   if (window !== window.top) return;
@@ -90,14 +104,23 @@
 
     const selection = window.getSelection();
     const context = getContextAroundSelection(selection);
+    const detectedLanguage = detectPageLanguage();
 
     chrome.runtime.sendMessage(
-      { type: "EXPLAIN_SELECTION_API", text: message.text, context },
+      {
+        type: "EXPLAIN_SELECTION_API",
+        text: message.text,
+        context,
+        detectedLanguage
+      },
       (res) => {
         if (res.error) showExplanationBubble(res.error);
         else showExplanationBubble(res.explanation);
       }
     );
+
   });
+
 })();
+
 

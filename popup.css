@@ -62,6 +62,10 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
+select option[value=""] {
+  color: #888;
+}
+
 /* Buttons */
 button {
   margin-top: 12px;

@@ -131,7 +131,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       const result = await response.json();
       const explanation =
         result.choices?.[0]?.message?.content ||
-        "Hmm… I couldn’t come up with a good explanation 🤔";
+        "Looks like I need a coffee ☕ break… I’ll be back after 12:00 AM 😊";
 
       sendResponse({ explanation });
     } catch (err) {
